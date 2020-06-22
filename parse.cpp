@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <regex>
 
 using namespace std;
 
@@ -16,6 +17,16 @@ void list() {
 	cout << " 3. all" << endl;
 }
 
+void payload() {
+	cout << endl;
+	cout << "This load pay" << endl;
+}
+
+void error() {
+	cout << "Command not found" << endl;
+	cout << endl;
+}
+
 int main() {
 	cout << "Welcome to Payload System" << endl;
 	string command;
@@ -27,7 +38,15 @@ int main() {
 			help();
 		else if (command == "list")
 			list();
-
+		else if ((int) command.find("payload") > -1)
+			if (regex_match(command, regex("^payload\\s\\d+$")))
+				payload();
+			else {
+				cout << "Required parameter lost" << endl;
+				cout << endl;
+			}
+		else
+			error();
 	}
 	return EXIT_SUCCESS;
 }
