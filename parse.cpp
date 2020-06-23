@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <regex>
+#include <thread>
 
 using namespace std;
 
@@ -27,7 +28,8 @@ void error() {
 	cout << endl;
 }
 
-int main() {
+void dialog() {
+
 	cout << "Welcome to Payload System" << endl;
 	string command;
 
@@ -58,5 +60,12 @@ int main() {
 		else
 			error();
 	}
+}
+
+int main() {
+
+	thread dialog(dialog);
+	dialog.join();
+
 	return EXIT_SUCCESS;
 }
