@@ -8,6 +8,35 @@
 using boost::asio::ip::tcp;
 using namespace std;
 
+class session {
+public:
+	session(tcp::socket socket)
+		: socket_(move(socket)) {
+	}
+
+	void start() {
+		do_read_header();
+	}
+	~session() {
+		cout << "Destructor session" << endl;
+	}
+private:
+	void do_read_header() {
+		cout << "read header" << endl;
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		do_read_body();
+	}
+
+	void do_read_body() {
+		cout << "read body" << endl;
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		socket_.close();
+//		do_read_header();
+	}
+
+	tcp::socket socket_;
+};
+
 class server {
 public:
 	server(boost::asio::io_context& io_context,
@@ -27,7 +56,7 @@ private:
 		acceptor_.async_accept(
 			[this](boost::system::error_code ec, tcp::socket socket) {
 				if (!ec) {
-
+					make_shared<session>(move(socket))->start();
 				}
 				do_accept();
 			});
