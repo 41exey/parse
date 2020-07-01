@@ -89,7 +89,7 @@ private:
 		cout << " 1. 127.0.0.1 - Windows 64" << endl;
 		cout << " 2. 132.32.78.154 - Linux x32_64" << endl;
 		cout << " 3. all" << endl;
-		cout << num << endl;
+//		cout << num << endl;
 		cout << endl;
 	}
 
@@ -115,7 +115,7 @@ private:
 				dialog::command_help(server_);
 			else if (command == "list")
 				dialog::command_list(server_);
-			else if ((int)command.find("payload") > -1)
+			else if (static_cast<int>(command.find("payload")) > -1)
 				if (regex_match(command, regex("^payload\\s\\d+$"))) {
 					static std::regex e("\\d+");
 					std::sregex_token_iterator i(command.begin(), command.end(), e);
@@ -126,7 +126,7 @@ private:
 						result += i->str() + " ",
 						++i;
 
-					cout << result << endl;
+//					cout << result << endl;
 					dialog::command_payload(server_, stoi(result));
 				}
 				else {
